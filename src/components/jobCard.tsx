@@ -1,24 +1,29 @@
 export const JobCard = (props: any) => {
-    const job = props.job;
+    const { languages, level, role, tools } = props.job;
 
+    let keywords = [role, level, ...languages, ...tools];
     return (
-        <div className="jobCard">
+        <div
+            className={
+                props.job.featured ? "jobCard jobCard--featured" : "jobCard"
+            }
+        >
             <div className="jobCard__top">
                 <div className="jobCard__top--logo">
-                    <img src={`${job.logo}`} alt="logo" />
+                    <img src={`${props.job.logo}`} alt="logo" />
                 </div>
                 <div className="jobCard__top--info">
                     <div className="jobCard__top--company">
-                        <h2>{job.company}</h2>
+                        <h2>{props.job.company}</h2>
                         <div className="jobCard__top--company-labels">
-                            {job.new ? (
+                            {props.job.new ? (
                                 <span className="jobCard__top--company-labels-new">
                                     new!
                                 </span>
                             ) : (
                                 ""
                             )}
-                            {job.featured ? (
+                            {props.job.featured ? (
                                 <span className="jobCard__top--company-labels-featured">
                                     featured
                                 </span>
@@ -27,32 +32,27 @@ export const JobCard = (props: any) => {
                             )}
                         </div>
                     </div>
-                    <div className="jobCard__top--title">{job.position}</div>
+                    <div className="jobCard__top--title">
+                        {props.job.position}
+                    </div>
                     <div className="jobCard__top--details">
-                        {job.postedAt}
+                        {props.job.postedAt}
                         <span className="bullet">&#x2022;</span>
-                        {job.contract}
+                        {props.job.contract}
                         <span className="bullet">&#x2022;</span>
-                        {job.location}
+                        {props.job.location}
                     </div>
                 </div>
             </div>
             <hr className="jobCard__break" />
             <ul className="jobCard__bottom">
-                <li className="tablet" key={job.role}>
-                    {job.role}
-                </li>
-                <li className="tablet" key={job.level}>
-                    {job.level}
-                </li>
-                {job.languages.map((language: any) => (
-                    <li className="tablet" key={language}>
-                        {language}
-                    </li>
-                ))}
-                {job.tools.map((tool: any) => (
-                    <li className="tablet" key={tool}>
-                        {tool}
+                {keywords.map((key: string, id: number) => (
+                    <li
+                        className="tablet"
+                        key={id}
+                        onClick={() => props.addFilter(key)}
+                    >
+                        {key}
                     </li>
                 ))}
             </ul>

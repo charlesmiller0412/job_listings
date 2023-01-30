@@ -1,19 +1,80 @@
-import { useState } from "react";
-import data from "./assets/data.json";
+import { useEffect, useState } from "react";
+import jobList from "./assets/data.json";
+import { FilterBar } from "./components/filterBar";
 import Header from "./components/header";
 import { JobCard } from "./components/jobCard";
 
-console.log(data);
-
-let key = 0;
 function App() {
+    const jobs = jobList;
+    const [filteredJobs, setFilteredJobs] = useState<any>([]);
+    const [filters, setFilters] = useState<any>([]);
+
+    const addFilter = (key: string) => {
+        if (!filters.includes(key)) {
+            setFilters([...filters, key]);
+        }
+    };
+
+    const deleteFilter = (job: string) => {
+        console.log(filters);
+        const newFilters = filters.filter((filter: any) => filter != job);
+        setFilters(newFilters);
+        console.log(newFilters);
+    };
+
+    const clearFilters = () => {
+        setFilters([]);
+    };
+
+    function handleFilters() {
+        if (filters.length > 0) {
+            const filteredJobs = jobs.filter((job: any) => {
+                return filters.every((filter: any) => {
+                    return (
+                        job.role === filter ||
+                        job.level === filter ||
+                        job.languages.includes(filter) ||
+                        job.tools.includes(filter)
+                    );
+                });
+            });
+            setFilteredJobs(filteredJobs);
+        } else {
+            setFilteredJobs(jobList);
+        }
+    }
+
+    useEffect(() => {
+        handleFilters();
+    }, [filters]);
+
     return (
         <div className="App">
             <Header />
             <main className="main">
-                {data.map((job: any) => (
-                    <JobCard job={job} key={key++} />
-                ))}
+                {filters.length > 0 && (
+                    <FilterBar
+                        filters={filters}
+                        setFilters={setFilters}
+                        deleteFilter={deleteFilter}
+                        clearFilters={clearFilters}
+                    />
+                )}
+                {!filteredJobs
+                    ? jobs.map((job: any) => (
+                          <JobCard
+                              job={job}
+                              key={job.id}
+                              addFilter={addFilter}
+                          />
+                      ))
+                    : filteredJobs.map((job: any) => (
+                          <JobCard
+                              job={job}
+                              key={job.id}
+                              addFilter={addFilter}
+                          />
+                      ))}
             </main>
         </div>
     );
