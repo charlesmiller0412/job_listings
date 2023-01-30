@@ -1,15 +1,15 @@
 {
     "name": "job_listings",
     "homepage": "https://charlesmiller0412.github.io/job_listings/",
-    "private": true,
-    "version": "0.0.0",
+    "private": false,
+    "version": "1.0.0",
     "type": "module",
     "scripts": {
         "dev": "vite",
         "build": "tsc && vite build",
         "preview": "vite preview",
         "predeploy": "npm run build",
-        "deploy": "gh-pages -d build"
+        "deploy": "gh-pages -d dist"
     },
     "dependencies": {
         "@fortawesome/fontawesome-svg-core": "^6.2.1",
