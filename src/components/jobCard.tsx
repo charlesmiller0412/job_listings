@@ -2,6 +2,7 @@ export const JobCard = (props: any) => {
     const { languages, level, role, tools } = props.job;
 
     let keywords = [role, level, ...languages, ...tools];
+
     return (
         <div
             className={
@@ -10,7 +11,7 @@ export const JobCard = (props: any) => {
         >
             <div className="jobCard__top">
                 <div className="jobCard__top--logo">
-                    <img src={`${props.job.logo}`} alt="logo" />
+                    <img src={`${props.job.logo.slice(1)}`} alt="logo" />
                 </div>
                 <div className="jobCard__top--info">
                     <div className="jobCard__top--company">

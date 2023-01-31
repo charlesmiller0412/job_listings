@@ -16,10 +16,8 @@ function App() {
     };
 
     const deleteFilter = (job: string) => {
-        console.log(filters);
         const newFilters = filters.filter((filter: any) => filter != job);
         setFilters(newFilters);
-        console.log(newFilters);
     };
 
     const clearFilters = () => {
