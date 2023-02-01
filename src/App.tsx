@@ -50,6 +50,7 @@ function App() {
         <div className="App">
             <Header />
             <main className="main">
+                <h1 className="main__heading">Job Listings</h1>
                 {filters.length > 0 && (
                     <FilterBar
                         filters={filters}
